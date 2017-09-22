@@ -28,7 +28,10 @@ def validate_token(access_token):
     Verify that a MuG access token is valid
     """
 
-    with open(os.path.dirname(os.path.realpath(sys.argv[0])) + '/auth_meta.json') as data_file:
+    if hasattr(sys, '_auth_meta_json') is False:
+        raise IOError
+
+    with open(sys._auth_meta_json) as data_file:
         data = json.load(data_file)
 
     if data['auth_server']['test'] == 1:
