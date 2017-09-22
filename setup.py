@@ -20,8 +20,8 @@
 from setuptools import setup
 
 setup(
-    name='rest',
-    packages=['rest'],
+    name='mg_rest_util',
+    packages=['mg_rest_util'],
     include_package_data=True,
     install_requires=[
         'flask', 'flask_restful', 'waitress', 'pytest', 'pylint'
