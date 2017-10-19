@@ -28,37 +28,41 @@ def validate_token(access_token):
     Verify that a MuG access token is valid
     """
 
-    if hasattr(sys, '_auth_meta_json') is False:
+    if hasattr(sys, "_auth_meta_json") is False:
         raise IOError
 
     with open(sys._auth_meta_json) as data_file:
         data = json.load(data_file)
 
-    if data['auth_server']['test'] == 1:
+    if data["auth_server"]["test"] == 1:
         return {
-            'user_id': 'test'
+            "user_id": "test"
         }
 
     http_handler = Http()
     resp, user_data = http_handler.request(
-        data['auth_server']['url'],
+        data["auth_server"]["url"],
         headers={
-            'Authorization': access_token
+            "Authorization": access_token
         }
     )
 
-    if not resp['status'] == '200':
+    if not resp["status"] == "200":
         return None
 
     try:
-        data = json.loads(user_data)
+        auth_data = json.loads(user_data)
     except TypeError:
         # Python 3 returns byt objects
-        data = json.loads(user_data.decode())
+        auth_data = json.loads(user_data.decode())
 
-    return {
-        'user_id': data['mug_id']
+    user_ids = {
+        "user_id": auth_data["mug_id"]
     }
+    if "public_id" in data["public_id"]:
+        user_ids["public_id"] = data["public_id"]
+
+    return user_ids
 
 def authorized(func):
     """
@@ -66,15 +70,15 @@ def authorized(func):
     """
 
     def _wrap(*args, **kwargs):
-        if 'Authorization' not in request.headers:
-            print('No token provided')
+        if "Authorization" not in request.headers:
+            print("No token provided")
             abort(401)
             return None
 
-        print('Checking token ...')
-        user_id = validate_token(request.headers['Authorization'])
+        print("Checking token ...")
+        user_id = validate_token(request.headers["Authorization"])
         if user_id is None:
-            print('Check FAILED')
+            print("Check FAILED")
             abort(401)
             return None
 
