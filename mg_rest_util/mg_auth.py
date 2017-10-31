@@ -71,6 +71,14 @@ def authorized(func):
 
     def _wrap(*args, **kwargs):
         if "Authorization" not in request.headers:
+            with open(sys._auth_meta_json) as data_file:
+                data = json.load(data_file)
+
+            if data["auth_server"]["test"] == 1:
+                return {
+                    "user_id": "test"
+                }
+
             print("No token provided")
             abort(401)
             return None
