@@ -17,7 +17,9 @@
 
 from __future__ import print_function
 
-import os
+# Required for ReadTheDocs
+from functools import wraps # pylint: disable=unused-import
+
 import sys
 import json
 from httplib2 import Http
@@ -69,6 +71,7 @@ def authorized(func):
     Wrapper for authorization based on tokens
     """
 
+    @wraps(func)
     def _wrap(*args, **kwargs):
         if "Authorization" not in request.headers:
             with open(sys._auth_meta_json) as data_file:
