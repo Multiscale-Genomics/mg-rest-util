@@ -47,7 +47,7 @@ def validate_token(access_token):
     if hasattr(sys, "_auth_meta_json") is False:
         raise IOError
 
-    with open(sys._auth_meta_json) as data_file:
+    with open(sys._auth_meta_json) as data_file: # pylint: disable=protected-access,no-member
         data = json.load(data_file)
 
     if data["auth_server"]["test"] == 1:
@@ -106,7 +106,7 @@ def authorized(func):
     @wraps(func)
     def _wrap(*args, **kwargs):
         if "Authorization" not in request.headers:
-            with open(sys._auth_meta_json) as data_file:
+            with open(sys._auth_meta_json) as data_file: # pylint: disable=protected-access,no-member
                 data = json.load(data_file)
 
             if data["auth_server"]["test"] == 1:
