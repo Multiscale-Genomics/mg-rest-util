@@ -1,15 +1,15 @@
 # mg-rest-util
 Util functions common to all rest services
 
+
+
 # Requirements
 - Python 2.7.10+
 - pyenv
 - pyenv virtualenv
 - Python Modules:
-  - DMP
   - Flask
   - Flask-Restful
-  - Waitress
   - httplib2
 
 # Installation

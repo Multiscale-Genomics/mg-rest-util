@@ -28,6 +28,17 @@ from flask import request, abort
 def validate_token(access_token):
     """
     Verify that a MuG access token is valid
+
+    Parameters
+    ----------
+    access_token : str
+
+    Returns
+    -------
+    user_ids : dict
+        user_id : str|None
+            The user_id, None if user does not exist or the test user_id if on a
+            test server
     """
 
     if hasattr(sys, "_auth_meta_json") is False:
@@ -69,6 +80,24 @@ def validate_token(access_token):
 def authorized(func):
     """
     Wrapper for authorization based on tokens
+
+    Example
+    -------
+    .. code-block:: python
+       :linenos:
+
+       from mg_rest_util.mg_auth import authorized
+
+       class GetTest(Resource):
+
+           @authorized
+           def get(self, user_id):
+               if user_id is not None:
+                   return "Valid user token"
+               return {
+                   'error': 'Forbidden',
+                   'status': 403
+               }
     """
 
     @wraps(func)
