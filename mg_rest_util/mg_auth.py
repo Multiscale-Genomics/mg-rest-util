@@ -36,9 +36,12 @@ def validate_token(access_token):
     Returns
     -------
     user_ids : dict
-        user_id : str|None
+        user_id : str
             The user_id, None if user does not exist or the test user_id if on a
             test server
+        piblic_id : str
+            The user_id for public datasets. This is set using the RESTful servers
+            authoristation config file.
     """
 
     if hasattr(sys, "_auth_meta_json") is False:
