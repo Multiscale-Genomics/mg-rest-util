@@ -1,7 +1,7 @@
 # mg-rest-util
 Util functions common to all rest services
 
-
+[![Documentation Status](https://readthedocs.org/projects/mg-rest-util/badge/?version=latest)](http://mg-rest-util.readthedocs.io/en/latest/?badge=latest) [![Code Health](https://landscape.io/github/Multiscale-Genomics/mg-rest-util/master/landscape.svg?style=flat)](https://landscape.io/github/Multiscale-Genomics/mg-rest-util/master)
 
 # Requirements
 - Python 2.7.10+
